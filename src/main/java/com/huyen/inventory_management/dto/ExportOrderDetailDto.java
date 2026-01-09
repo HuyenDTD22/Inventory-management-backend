@@ -5,9 +5,9 @@ import java.util.UUID;
 
 import jakarta.validation.constraints.NotNull;
 
-public class ImportOrderDetailDto {
-    @NotNull(message = "Import order ID is required")
-    private UUID ImportOrderId;
+public class ExportOrderDetailDto {
+    @NotNull(message = "Export order ID is required")
+    private UUID ExportOrderId;
 
     @NotNull(message = "Material ID is required")
     private UUID materialId;
@@ -18,12 +18,12 @@ public class ImportOrderDetailDto {
     @NotNull(message = "Unit price is required")
     private BigDecimal unitPrice;
 
-    public UUID getImportOrderId() {
-        return ImportOrderId;
+    public UUID getExportOrderId() {
+        return ExportOrderId;
     }
 
-    public void setImportOrderId(UUID importOrderId) {
-        ImportOrderId = importOrderId;
+    public void setExportOrderId(UUID exportOrderId) {
+        ExportOrderId = exportOrderId;
     }
 
     public UUID getMaterialId() {

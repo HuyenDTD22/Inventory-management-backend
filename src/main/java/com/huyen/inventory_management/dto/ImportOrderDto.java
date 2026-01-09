@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class ImportOrderDto {
-    @NotBlank(message = "Status is required")
+    @NotBlank(message = "Payment status is required")
     private Boolean paymentStatus;
     
     @NotNull(message = "Supplier ID is required")

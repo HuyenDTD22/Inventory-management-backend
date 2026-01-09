@@ -1,5 +1,6 @@
 package com.huyen.inventory_management.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -14,14 +15,14 @@ public class ImportOrder {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "code")
+    @Column(name = "code", unique = true, nullable = false)
     private String code;
 
     @Column(name = "status")
     private Boolean paymentStatus;
 
     @Column(name = "total_amount")
-    private Float totalAmount;
+    private BigDecimal totalAmount;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -68,11 +69,11 @@ public class ImportOrder {
         this.paymentStatus = paymentStatus;
     }
 
-    public Float getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Float totalAmount) {
+    public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
 
@@ -124,5 +125,4 @@ public class ImportOrder {
         this.importOrderDetails = importOrderDetails;
     }
 
-    
 }

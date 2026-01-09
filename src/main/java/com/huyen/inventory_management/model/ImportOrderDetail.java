@@ -1,5 +1,6 @@
 package com.huyen.inventory_management.model;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -13,10 +14,10 @@ public class ImportOrderDetail {
     private UUID id;
 
     @Column(name = "quantity")
-    private Float quantity;
+    private BigDecimal quantity;
 
     @Column(name = "unit_price")
-    private Float unitPrice;
+    private BigDecimal unitPrice;
 
     @Column(name = "deleted")
     private Boolean deleted;
@@ -37,19 +38,19 @@ public class ImportOrderDetail {
         this.id = id;
     }
 
-    public Float getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Float quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
-    public Float getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Float unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 

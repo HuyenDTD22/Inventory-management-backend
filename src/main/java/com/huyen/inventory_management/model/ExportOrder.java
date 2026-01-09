@@ -1,5 +1,6 @@
 package com.huyen.inventory_management.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +19,10 @@ public class ExportOrder {
     private String code;
 
     @Column(name = "status")
-    private String status;
+    private Boolean paymentStatus;
+
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -57,12 +61,20 @@ public class ExportOrder {
         this.code = code;
     }
 
-    public String getStatus() {
-        return status;
+    public Boolean getPaymentStatus() {
+        return paymentStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setPaymentStatus(Boolean paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -113,5 +125,6 @@ public class ExportOrder {
         this.exportOrderDetails = exportOrderDetails;
     }
 
+    
     
 }

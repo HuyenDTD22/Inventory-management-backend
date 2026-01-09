@@ -1,13 +1,14 @@
 package com.huyen.inventory_management.dto;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public class ImportOrderDetailResponseDto {
     private UUID id;
 
-    private Float quantity;
+    private BigDecimal quantity;
 
-    private Float unitPrice;
+    private BigDecimal unitPrice;
 
     private String material;
 
@@ -19,19 +20,19 @@ public class ImportOrderDetailResponseDto {
         this.id = id;
     }
 
-    public Float getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Float quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
-    public Float getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Float unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 

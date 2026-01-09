@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class ImportOrderResponseDto {
+public class ExportOrderResponseDto {
     private UUID id;
 
     private String code;
@@ -16,13 +16,13 @@ public class ImportOrderResponseDto {
 
     private BigDecimal totalAmount;
 
-    private String supplier;
+    private String agent;
 
     private String warehouse;
 
     private String user;
 
-    private List<ImportOrderDetailResponseDto> details;
+    private List<ExportOrderDetailResponseDto> details;
 
     public UUID getId() {
         return id;
@@ -64,12 +64,12 @@ public class ImportOrderResponseDto {
         this.totalAmount = totalAmount;
     }
 
-    public String getSupplier() {
-        return supplier;
+    public String getAgent() {
+        return agent;
     }
 
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
+    public void setAgent(String agent) {
+        this.agent = agent;
     }
 
     public String getWarehouse() {
@@ -88,14 +88,13 @@ public class ImportOrderResponseDto {
         this.user = user;
     }
 
-    public List<ImportOrderDetailResponseDto> getDetails() {
+    public List<ExportOrderDetailResponseDto> getDetails() {
         return details;
     }
 
-    public void setDetails(List<ImportOrderDetailResponseDto> details) {
+    public void setDetails(List<ExportOrderDetailResponseDto> details) {
         this.details = details;
     }
 
-    
     
 }

@@ -3,28 +3,12 @@ package com.huyen.inventory_management.dto;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import jakarta.validation.constraints.NotNull;
-
-public class ImportOrderDetailDto {
-    @NotNull(message = "Import order ID is required")
-    private UUID ImportOrderId;
-
-    @NotNull(message = "Material ID is required")
+public class ExportOrderDetailUpdateDto {
     private UUID materialId;
 
-    @NotNull(message = "Quantity is required")
     private BigDecimal quantity;
 
-    @NotNull(message = "Unit price is required")
     private BigDecimal unitPrice;
-
-    public UUID getImportOrderId() {
-        return ImportOrderId;
-    }
-
-    public void setImportOrderId(UUID importOrderId) {
-        ImportOrderId = importOrderId;
-    }
 
     public UUID getMaterialId() {
         return materialId;

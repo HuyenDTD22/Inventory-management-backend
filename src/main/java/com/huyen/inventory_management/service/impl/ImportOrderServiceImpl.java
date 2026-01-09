@@ -1,5 +1,6 @@
 package com.huyen.inventory_management.service.impl;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -26,7 +27,9 @@ import com.huyen.inventory_management.repository.SupplierRepository;
 import com.huyen.inventory_management.repository.UserRepository;
 import com.huyen.inventory_management.repository.WarehouseRepository;
 import com.huyen.inventory_management.service.ImportOrderService;
-import com.huyen.inventory_management.util.OrderCodeGenerator;
+import com.huyen.inventory_management.util.CodeGeneratorUtil;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ImportOrderServiceImpl implements ImportOrderService {
@@ -50,9 +53,10 @@ public class ImportOrderServiceImpl implements ImportOrderService {
     private MaterialRepository materialRepository;
 
     @Autowired
-    private OrderCodeGenerator orderCodeGenerator;
+    private CodeGeneratorUtil codeGeneratorUtil;
 
     @Override
+    @Transactional
     public ImportOrderResponseDto createImportOrder(ImportOrderDto importOrderDto) {
         Supplier supplier = supplierRepository.findByIdAndDeletedFalse(importOrderDto.getSupplierId())
                 .orElseThrow(() -> new NotFoundException("Supplier not found"));
@@ -62,7 +66,7 @@ public class ImportOrderServiceImpl implements ImportOrderService {
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         ImportOrder importOrder = new ImportOrder();
-        importOrder.setCode(orderCodeGenerator.generateOrderCode(OrderCodeGenerator.OrderType.IMPORT));
+        importOrder.setCode(codeGeneratorUtil.generateCode("PN", "import_order_seq"));
         importOrder.setPaymentStatus(importOrderDto.getPaymentStatus());
         importOrder.setSupplier(supplier);
         importOrder.setWarehouse(warehouse);
@@ -76,11 +80,11 @@ public class ImportOrderServiceImpl implements ImportOrderService {
                 .map(importOrderDetailDto -> {
                     Material material = materialRepository.findByIdAndDeletedFalse(importOrderDetailDto.getMaterialId())
                             .orElseThrow(() -> new NotFoundException("Material not found!"));
-                    if (importOrderDetailDto.getQuantity() <= 0) {
+                    if (importOrderDetailDto.getQuantity().compareTo(BigDecimal.ZERO) <= 0) {
                         throw new IllegalArgumentException("Quantity must be positive!");
                     }
-                    if (importOrderDetailDto.getUnitPrice() < 0) {
-                        throw new IllegalArgumentException("Unit price cannot be negative!");
+                    if (importOrderDetailDto.getUnitPrice().compareTo(BigDecimal.ZERO) < 0) {
+                        throw new IllegalArgumentException("Unit price can not be negative!");
                     }
 
                     ImportOrderDetail importOrderDetail = new ImportOrderDetail();
@@ -96,9 +100,9 @@ public class ImportOrderServiceImpl implements ImportOrderService {
         importOrderDetailRepository.saveAll(importOrderDetails);
         savedImportOrder.setImportOrderDetails(importOrderDetails);
 
-        Float totalAmount = importOrderDetails.stream()
-                .map(importOrderDetail -> importOrderDetail.getQuantity() * importOrderDetail.getUnitPrice())
-                .reduce(0.0f, Float::sum);
+        BigDecimal totalAmount = importOrderDetails.stream()
+                .map(importOrderDetail -> importOrderDetail.getQuantity().multiply(importOrderDetail.getUnitPrice()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         savedImportOrder.setTotalAmount(totalAmount);
 
         importOrderRepository.save(savedImportOrder);
@@ -123,6 +127,7 @@ public class ImportOrderServiceImpl implements ImportOrderService {
     }
 
     @Override
+    @Transactional
     public ImportOrderResponseDto updateImportOrder(UUID id, ImportOrderUpdateDto importOrderUpdateDto) {
         ImportOrder importOrder = importOrderRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new NotFoundException("Không tìm thấy phiếu nhập hàng!"));

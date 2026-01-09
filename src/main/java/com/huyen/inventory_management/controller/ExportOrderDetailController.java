@@ -8,11 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.huyen.inventory_management.dto.ImportOrderDetailDto;
-import com.huyen.inventory_management.dto.ImportOrderDetailResponseDto;
-import com.huyen.inventory_management.dto.ImportOrderDetailUpdateDto;
+import com.huyen.inventory_management.dto.ExportOrderDetailDto;
+import com.huyen.inventory_management.dto.ExportOrderDetailResponseDto;
+import com.huyen.inventory_management.dto.ExportOrderDetailUpdateDto;
 import com.huyen.inventory_management.payload.ResponseData;
-import com.huyen.inventory_management.service.ImportOrderDetailService;
+import com.huyen.inventory_management.service.ExportOrderDetailService;
 
 import jakarta.validation.Valid;
 
@@ -24,53 +24,52 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/import-order-details")
-public class ImportOrderDetailController {
+@RequestMapping("/export-order-details")
+public class ExportOrderDetailController {
 
     @Autowired
-    private ImportOrderDetailService importOrderDetailService;
+    private ExportOrderDetailService exportOrderDetailService;
 
     @PostMapping
-    public ResponseEntity<ResponseData> createImportOrderDetail(
-            @Valid @RequestBody ImportOrderDetailDto importOrderDetailDto) {
-        ImportOrderDetailResponseDto responseDto = importOrderDetailService
-                .createImportOrderDetail(importOrderDetailDto);
+    public ResponseEntity<ResponseData> createExportOrderDetail(
+            @Valid @RequestBody ExportOrderDetailDto exportOrderDetailDto) {
+        ExportOrderDetailResponseDto responseDto = exportOrderDetailService
+                .createExportOrderDetail(exportOrderDetailDto);
 
         ResponseData response = new ResponseData(
                 HttpStatus.CREATED.value(),
                 true,
-                "Tạo chi tiết phiếu nhập kho thành công!",
+                "Tạo chi tiết phiếu nhập hàng thành công",
                 responseDto);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     
     @PatchMapping("/{id}")
-    public ResponseEntity<ResponseData> updateImportOrderDetail(@Valid @PathVariable UUID id,
-            @RequestBody ImportOrderDetailUpdateDto importOrderDetailUpdateDto) {
-        ImportOrderDetailResponseDto responseDto = importOrderDetailService.updateImportOrderDetail(id,
-                importOrderDetailUpdateDto);
+    public ResponseEntity<ResponseData> updateExportOrderDetail(@Valid @PathVariable UUID id,
+            @RequestBody ExportOrderDetailUpdateDto exportOrderDetailUpdateDto) {
+        ExportOrderDetailResponseDto responseDto = exportOrderDetailService.updateExportOrderDetail(id,
+                exportOrderDetailUpdateDto);
 
         ResponseData response = new ResponseData(
                 HttpStatus.OK.value(),
                 true,
-                "Chỉnh sửa chi tiết phiếu nhập kho thành công!",
+                "Chỉnh sửa chi tiết phiếu nhập hàng thành công",
                 responseDto);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseData> deleteImportOrderDetail(@Valid @PathVariable UUID id) {
-        importOrderDetailService.deleteImportOrderDetail(id);
+    public ResponseEntity<ResponseData> deleteExportOrderDetail(@Valid @PathVariable UUID id) {
+        exportOrderDetailService.deleteExportOrderDetail(id);
 
         ResponseData response = new ResponseData(
                 HttpStatus.OK.value(),
                 true,
-                "Xoá chi tiết phiếu nhập kho thành công!",
+                "Xoá chi tiết phiếu nhập hàng thành công",
                 null);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    
 }

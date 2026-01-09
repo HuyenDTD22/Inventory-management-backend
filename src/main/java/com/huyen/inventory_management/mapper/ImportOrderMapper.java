@@ -17,6 +17,7 @@ public class ImportOrderMapper {
         dto.setCode(importOrder.getCode());
         dto.setPaymentStatus(importOrder.getPaymentStatus());
         dto.setCreatedAt(importOrder.getCreatedAt());
+        dto.setTotalAmount(importOrder.getTotalAmount());
         dto.setSupplier(importOrder.getSupplier().getName());
         dto.setUser(importOrder.getUser().getFullName());
         dto.setWarehouse(importOrder.getWarehouse().getName());

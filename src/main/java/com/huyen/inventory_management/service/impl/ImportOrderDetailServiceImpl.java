@@ -1,5 +1,6 @@
 package com.huyen.inventory_management.service.impl;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,10 @@ public class ImportOrderDetailServiceImpl implements ImportOrderDetailService {
         ImportOrder importOrder = importOrderRepository.findByIdAndDeletedFalse(importOrderDetailDto.getImportOrderId())
                 .orElseThrow(() -> new NotFoundException("Không tìm thấy phiếu nhập kho!"));
         importOrderDetail.setMaterial(material);
+        importOrderDetail.setImportOrder(importOrder);
         importOrderDetail.setQuantity(importOrderDetailDto.getQuantity());
         importOrderDetail.setUnitPrice(importOrderDetailDto.getUnitPrice());
+        importOrderDetail.setDeleted(false);
 
         importOrderDetailRepository.save(importOrderDetail);
 
@@ -58,10 +61,10 @@ public class ImportOrderDetailServiceImpl implements ImportOrderDetailService {
                     .orElseThrow(() -> new NotFoundException("Không tìm thấy vật liệu!"));
             importOrderDetail.setMaterial(material);
         }
-        if (importOrderDetailUpdateDto.getQuantity() != null && importOrderDetailUpdateDto.getQuantity() > 0) {
+        if (importOrderDetailUpdateDto.getQuantity() != null && importOrderDetailUpdateDto.getQuantity().compareTo(BigDecimal.ZERO) > 0) {
             importOrderDetail.setQuantity(importOrderDetailUpdateDto.getQuantity());
         }
-        if (importOrderDetailUpdateDto.getUnitPrice() != null && importOrderDetailUpdateDto.getUnitPrice() > 0) {
+        if (importOrderDetailUpdateDto.getUnitPrice() != null && importOrderDetailUpdateDto.getUnitPrice().compareTo(BigDecimal.ZERO) > 0) {
             importOrderDetail.setUnitPrice(importOrderDetailUpdateDto.getUnitPrice());
         }
 
