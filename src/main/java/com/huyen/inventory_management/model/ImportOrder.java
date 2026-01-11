@@ -18,7 +18,10 @@ public class ImportOrder {
     @Column(name = "code", unique = true, nullable = false)
     private String code;
 
-    @Column(name = "status")
+    @Column(name = "note")
+    private String note;
+
+    @Column(name = "payment_status")
     private Boolean paymentStatus;
 
     @Column(name = "total_amount")
@@ -35,15 +38,14 @@ public class ImportOrder {
     private Supplier supplier;
 
     @ManyToOne
-    @JoinColumn(name = "warehouse_id")
-    private Warehouse warehouse;
-
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "importOrder")
     private List<ImportOrderDetail> importOrderDetails;
+
+    @OneToMany(mappedBy = "importOrder")
+    private List<ImportOrderPayment> importOrderPayments;
 
     public UUID getId() {
         return id;
@@ -59,6 +61,14 @@ public class ImportOrder {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Boolean getPaymentStatus() {
@@ -101,14 +111,6 @@ public class ImportOrder {
         this.supplier = supplier;
     }
 
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
-
     public User getUser() {
         return user;
     }
@@ -125,4 +127,11 @@ public class ImportOrder {
         this.importOrderDetails = importOrderDetails;
     }
 
+    public List<ImportOrderPayment> getImportOrderPayments() {
+        return importOrderPayments;
+    }
+
+    public void setImportOrderPayments(List<ImportOrderPayment> importOrderPayments) {
+        this.importOrderPayments = importOrderPayments;
+    }
 }

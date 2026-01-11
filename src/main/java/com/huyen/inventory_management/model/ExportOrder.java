@@ -18,7 +18,10 @@ public class ExportOrder {
     @Column(name = "code")
     private String code;
 
-    @Column(name = "status")
+    @Column(name = "note")
+    private String note;
+
+    @Column(name = "payment_status")
     private Boolean paymentStatus;
 
     @Column(name = "total_amount")
@@ -35,15 +38,14 @@ public class ExportOrder {
     private Agent agent;
 
     @ManyToOne
-    @JoinColumn(name = "warehouse_id")
-    private Warehouse warehouse;
-
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "exportOrder")
     private List<ExportOrderDetail> exportOrderDetails;
+
+    @OneToMany(mappedBy = "exportOrder")
+    private List<ExportOrderPayment> exportOrderPayments;
 
     public UUID getId() {
         return id;
@@ -59,6 +61,14 @@ public class ExportOrder {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Boolean getPaymentStatus() {
@@ -101,14 +111,6 @@ public class ExportOrder {
         this.agent = agent;
     }
 
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
-
     public User getUser() {
         return user;
     }
@@ -125,6 +127,11 @@ public class ExportOrder {
         this.exportOrderDetails = exportOrderDetails;
     }
 
-    
-    
+    public List<ExportOrderPayment> getExportOrderPayments() {
+        return exportOrderPayments;
+    }
+
+    public void setExportOrderPayments(List<ExportOrderPayment> exportOrderPayments) {
+        this.exportOrderPayments = exportOrderPayments;
+    }
 }

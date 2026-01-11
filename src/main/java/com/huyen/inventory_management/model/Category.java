@@ -1,14 +1,14 @@
 package com.huyen.inventory_management.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.*;
-
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
@@ -26,11 +26,8 @@ public class Role {
     @Column(name = "deleted")
     private Boolean deleted;
 
-    @OneToMany(mappedBy = "role")
-    private List<RoleUser> roleUsers;
-
-    @OneToMany(mappedBy = "role")
-    private List<RolePermission> rolePermissions;
+    @OneToMany(mappedBy = "category")
+    private List<Material> materials;
 
     public UUID getId() {
         return id;
@@ -72,19 +69,11 @@ public class Role {
         this.deleted = deleted;
     }
 
-    public List<RoleUser> getRoleUsers() {
-        return roleUsers;
+    public List<Material> getMaterials() {
+        return materials;
     }
 
-    public void setRoleUsers(List<RoleUser> roleUsers) {
-        this.roleUsers = roleUsers;
-    }
-
-    public List<RolePermission> getRolePermissions() {
-        return rolePermissions;
-    }
-
-    public void setRolePermissions(List<RolePermission> rolePermissions) {
-        this.rolePermissions = rolePermissions;
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
     }
 }

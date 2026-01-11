@@ -20,17 +20,25 @@ public class Material {
     @Column(name = "code")
     private String code;
 
-    @Column(name = "unit")
-    private String unit;
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @Column(name = "deleted")
     private Boolean deleted;
 
-    @Column(name = "description")
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "unit_id")
+    private Unit unit;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @OneToMany(mappedBy = "material")
     private List<ImportOrderDetail> importOrderDetails;
@@ -65,12 +73,28 @@ public class Material {
         this.code = code;
     }
 
-    public String getUnit() {
-        return unit;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Boolean getDeleted() {
@@ -81,20 +105,20 @@ public class Material {
         this.deleted = deleted;
     }
 
-    public String getDescription() {
-        return description;
+    public Unit getUnit() {
+        return unit;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public List<ImportOrderDetail> getImportOrderDetails() {
@@ -120,6 +144,4 @@ public class Material {
     public void setInventories(List<Inventory> inventories) {
         this.inventories = inventories;
     }
-
-    
 }

@@ -1,6 +1,7 @@
 package com.huyen.inventory_management.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -19,6 +20,9 @@ public class ExportOrderDetail {
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
     @Column(name = "deleted")
     private Boolean deleted;
 
@@ -29,6 +33,10 @@ public class ExportOrderDetail {
     @ManyToOne
     @JoinColumn(name = "material_id")
     private Material material;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 
     public UUID getId() {
         return id;
@@ -52,6 +60,14 @@ public class ExportOrderDetail {
 
     public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Boolean getDeleted() {
@@ -78,7 +94,11 @@ public class ExportOrderDetail {
         this.material = material;
     }
 
-    
+    public Location getLocation() {
+        return location;
+    }
 
-    
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }

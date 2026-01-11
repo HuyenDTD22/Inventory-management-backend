@@ -1,14 +1,14 @@
 package com.huyen.inventory_management.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.*;
-
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "locations")
+public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
@@ -20,17 +20,24 @@ public class Role {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "deleted")
     private Boolean deleted;
 
-    @OneToMany(mappedBy = "role")
-    private List<RoleUser> roleUsers;
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    private Warehouse warehouse;
 
-    @OneToMany(mappedBy = "role")
-    private List<RolePermission> rolePermissions;
+    @OneToMany(mappedBy = "location")
+    private List<ImportOrderDetail> importOrderDetails;
+
+    @OneToMany(mappedBy = "location")
+    private List<ExportOrderDetail> exportOrderDetails;
 
     public UUID getId() {
         return id;
@@ -56,6 +63,14 @@ public class Role {
         this.description = description;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -72,19 +87,27 @@ public class Role {
         this.deleted = deleted;
     }
 
-    public List<RoleUser> getRoleUsers() {
-        return roleUsers;
+    public Warehouse getWarehouse() {
+        return warehouse;
     }
 
-    public void setRoleUsers(List<RoleUser> roleUsers) {
-        this.roleUsers = roleUsers;
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
     }
 
-    public List<RolePermission> getRolePermissions() {
-        return rolePermissions;
+    public List<ImportOrderDetail> getImportOrderDetails() {
+        return importOrderDetails;
     }
 
-    public void setRolePermissions(List<RolePermission> rolePermissions) {
-        this.rolePermissions = rolePermissions;
+    public void setImportOrderDetails(List<ImportOrderDetail> importOrderDetails) {
+        this.importOrderDetails = importOrderDetails;
+    }
+
+    public List<ExportOrderDetail> getExportOrderDetails() {
+        return exportOrderDetails;
+    }
+
+    public void setExportOrderDetails(List<ExportOrderDetail> exportOrderDetails) {
+        this.exportOrderDetails = exportOrderDetails;
     }
 }

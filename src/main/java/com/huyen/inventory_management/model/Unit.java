@@ -1,14 +1,13 @@
 package com.huyen.inventory_management.model;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
+
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.*;
-
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "units")
+public class Unit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
@@ -20,17 +19,11 @@ public class Role {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
     @Column(name = "deleted")
     private Boolean deleted;
 
-    @OneToMany(mappedBy = "role")
-    private List<RoleUser> roleUsers;
-
-    @OneToMany(mappedBy = "role")
-    private List<RolePermission> rolePermissions;
+    @OneToMany(mappedBy = "unit")
+    private List<Material> materials;
 
     public UUID getId() {
         return id;
@@ -56,14 +49,6 @@ public class Role {
         this.description = description;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Boolean getDeleted() {
         return deleted;
     }
@@ -72,19 +57,11 @@ public class Role {
         this.deleted = deleted;
     }
 
-    public List<RoleUser> getRoleUsers() {
-        return roleUsers;
+    public List<Material> getMaterials() {
+        return materials;
     }
 
-    public void setRoleUsers(List<RoleUser> roleUsers) {
-        this.roleUsers = roleUsers;
-    }
-
-    public List<RolePermission> getRolePermissions() {
-        return rolePermissions;
-    }
-
-    public void setRolePermissions(List<RolePermission> rolePermissions) {
-        this.rolePermissions = rolePermissions;
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
     }
 }

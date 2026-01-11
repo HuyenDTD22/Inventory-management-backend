@@ -17,8 +17,14 @@ public class Warehouse {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "address")
     private String address;
+
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -26,11 +32,12 @@ public class Warehouse {
     @Column(name = "deleted")
     private Boolean deleted;
 
-    @OneToMany(mappedBy = "warehouse")
-    private List<ImportOrder> importOrders;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "warehouse")
-    private List<ExportOrder> exportOrders;
+    private List<Location> locations;
 
     @OneToMany(mappedBy = "warehouse")
     private List<Inventory> inventories;
@@ -51,12 +58,28 @@ public class Warehouse {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -75,20 +98,20 @@ public class Warehouse {
         this.deleted = deleted;
     }
 
-    public List<ImportOrder> getImportOrders() {
-        return importOrders;
+    public User getUser() {
+        return user;
     }
 
-    public void setImportOrders(List<ImportOrder> importOrders) {
-        this.importOrders = importOrders;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public List<ExportOrder> getExportOrders() {
-        return exportOrders;
+    public List<Location> getLocations() {
+        return locations;
     }
 
-    public void setExportOrders(List<ExportOrder> exportOrders) {
-        this.exportOrders = exportOrders;
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 
     public List<Inventory> getInventories() {
@@ -98,8 +121,4 @@ public class Warehouse {
     public void setInventories(List<Inventory> inventories) {
         this.inventories = inventories;
     }
-
-    
-
-    
 }
